@@ -3,16 +3,20 @@ import { FaRegImage } from "react-icons/fa";
 import { CircularProgress } from "../components/CircularProgressBar";
 import Post from "../components/Post";
 import { PostType } from "../services/types";
+import Sidebar from "../components/Sidebar";
+import { useAuth } from "../hooks/useAuth";
 let MAX_POST = 200;
 export default function Home() {
   const [postText, setPostText] = useState<string>("");
   const [postLimit, setPostLimit] = useState<number>(0); // Character limit
   const [allPosts, setAllPosts] = useState<PostType[]>([]); // Array of posts
+  const { auth } = useAuth();
   const inputDivRef = useRef<HTMLDivElement>(null);
 
   function handleInput(e: any) {
     const post = e.target.innerText.trim();
     const postLength = post.replace(/\s/g, "").length; // Removes ALL spaces
+
 
     console.log(post, postLength);
 
@@ -47,9 +51,7 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-[20rem_1fr_25rem] text-lg bg-[rgba(0,0,0)] text-white h-screen px-6">
-      <div className="border-[#3e4144] border-r-1 py-3">
-        <h1 className="text-3xl">HE</h1>
-      </div>
+      <Sidebar />
       <div className="border-[#3e4144] border-r-1">
         <h2 className="text-center py-3 text-xl border-b border-[#3e4144] flex flex-col gap-3">
           Posts
@@ -80,23 +82,33 @@ export default function Home() {
 
             <div className="flex items-center gap-3">
               <CircularProgress percentage={postLimit} />
-              <button onClick={addNewPost} className="bg-white cursor-pointer text-black rounded-full px-5 font-semibold py-1">
+              <button
+                onClick={addNewPost}
+                className="bg-white cursor-pointer text-black rounded-full px-5 font-semibold py-1"
+              >
                 Post
               </button>
             </div>
           </div>
         </div>
 
-        {allPosts.length > 0 ? allPosts.map((post, id) => (
-          <Post
-            hrDiff={post.hrDiff}
-            postText={post.postText}
-            postUserFirstName={post.postUserFirstName}
-            imageUrl={post.imageUrl}
-            postUsername={post.postUsername}
-            key={id}
-          />
-        )) : <p className="text-center">No posts yet, be the first to create a post!!</p>}
+        {allPosts.length > 0 ? (
+          allPosts.map((post, id) => (
+            <Post
+              showState={auth?.role === "admin"}
+              hrDiff={post.hrDiff}
+              postText={post.postText}
+              postUserFirstName={post.postUserFirstName}
+              imageUrl={post.imageUrl}
+              postUsername={post.postUsername}
+              key={id}
+            />
+          ))
+        ) : (
+          <p className="text-center">
+            No posts yet, be the first to create a post!!
+          </p>
+        )}
       </div>
       <div className="border-[#3e4144] px-3 py-22">
         <div className="flex flex-col gap-5">

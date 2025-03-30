@@ -15,4 +15,5 @@ export type PostType = {
   postUserFirstName: string;
   hrDiff: string;
   imageUrl?: string;
+  showState?: boolean
 };
