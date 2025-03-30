@@ -14,7 +14,7 @@ export default function App() {
 
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
-          <Route index element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

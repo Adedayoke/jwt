@@ -1,11 +1,10 @@
 import { createContext, ReactNode, useState } from "react";
 
-
-interface AuthContextType {
-    auth: any;
-    setAuth: (value: any) => void;
+interface AuthContextInterface {
+  auth?: any;
+  setAuth?: (value: any) => void;
 }
-export const AuthContext = createContext({});
+export const AuthContext = createContext<AuthContextInterface>({});
 
 export default function AuthContextProvider({
   children,
@@ -13,5 +12,9 @@ export default function AuthContextProvider({
   children: ReactNode;
 }) {
   const [auth, setAuth] = useState({});
-  return <AuthContext.Provider value={{auth, setAuth}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
