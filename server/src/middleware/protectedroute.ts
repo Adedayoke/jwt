@@ -17,12 +17,28 @@ export const protectedRoute =
         if (isValid) {
           (req as any).user = isValid;
 
+          console.log("token valid");
+
           next();
+
+          return;
         } else {
           throw new Error("Invalid token");
         }
       }
+
+      return res.status(404).json({
+        success: false,
+        message: "No token found",
+      });
     } catch (error) {
       next(error);
     }
-  };
+    };
+  
+
+
+
+
+
+
