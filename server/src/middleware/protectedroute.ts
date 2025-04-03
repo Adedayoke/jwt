@@ -15,6 +15,8 @@ export const protectedRoute =
         const isValid = jwt.verify(token, appConfig().JWT_SECRET);
 
         if (isValid) {
+          (req as any).user = isValid;
+
           next();
         } else {
           throw new Error("Invalid token");
