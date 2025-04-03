@@ -14,10 +14,10 @@ model Posts {
     id Int @id @default(autoincrement())
     user users @relation(fields: [userId] , references: [id])
     userId Int
-    image Json
     comments Comments[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    text String
 }
 
 model Comments {

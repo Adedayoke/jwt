@@ -3,6 +3,7 @@ import {
   getAllPosts,
   getPostById,
   getAllPostsMadeByAuser,
+  createPost,
 } from "../controller/post.controller";
 import { protectedRoute } from "../middleware/protectedroute";
 import { validateRequest } from "../middleware/validate-request";
@@ -18,5 +19,9 @@ postRoute.get(
   validateRequest(postQuerySchema),
   getAllPostsMadeByAuser
 );
+
+// POST REQUESTS
+
+postRoute.post("/single-post", protectedRoute(), createPost);
 
 export default postRoute;

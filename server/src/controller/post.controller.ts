@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
 
-
 // GET ==> REQUESTS
 
 export const getAllPosts = async (
@@ -107,6 +106,40 @@ export const getAllPostsMadeByAuser = async (
   }
 };
 
-
-
 // POST ==> REQUESTS
+
+export const createPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const prisma = new PrismaClient();
+
+  const { text } = req.body;
+
+  // get the id of the user from the protected route
+  const userId = (req as any)?.user?.userId;
+
+  try {
+    // attempt to create a post for a user
+    const post = await prisma.posts.create({
+      data: {
+        userId: userId,
+        text: text,
+      },
+    });
+
+    // assert if there was a post
+
+    if (post) {
+      return res.status(201).json({
+        success: true,
+        data: post,
+      });
+    }
+
+    throw new Error("Could not create post");
+  } catch (error) {
+    next(error);
+  }
+};
