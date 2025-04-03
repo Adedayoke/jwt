@@ -21,12 +21,11 @@ export const signUpSchema = z
 
 export type signUpType = TypeOf<typeof signUpSchema>["body"];
 
-export const loginSchema = z.object({
+export const signInSchema = z.object({
   body: z.object({
     email: z.string().email("A valid email is needed"),
     password: z.string().min(8, "the password should be at least 8 characters"),
   }),
 });
 
-
-export type loginType = TypeOf<typeof loginSchema>["body"];
+export type signinType = TypeOf<typeof signInSchema>["body"];
