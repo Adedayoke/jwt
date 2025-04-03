@@ -112,7 +112,7 @@ export const createPost = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<any> => {
   const prisma = new PrismaClient();
 
   const { text } = req.body;
