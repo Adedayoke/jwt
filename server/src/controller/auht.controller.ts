@@ -61,7 +61,7 @@ export const signIn = async (
   req: Request<{}, {}, signinType>,
   res: Response,
   next: NextFunction
-) => {
+): Promise<any> => {
   // take the inputs
 
   const { email, password } = req.body;
@@ -104,3 +104,5 @@ export const signIn = async (
     message: "Failed to authenticate user",
   });
 };
+
+

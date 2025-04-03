@@ -1,10 +1,11 @@
-import { ErrorRequestHandler, Request, Response } from "express";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { BadRequestError, InternalServerError } from "./other-error-class";
 
-export const ErrorHandler: ErrorRequestHandler = (
+export const ErrorHandler: ErrorRequestHandler=  (
   error,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): any => {
   if (error instanceof BadRequestError) {
     return res.status(error.errorCode).json({
