@@ -14,7 +14,7 @@ export const generateToken = (tokenType: TokenType, payload: TPayload) => {
     });
   }
 
-  return jwt.sign(payload, appConfig().REFRESH_TOKEN_TIME, {
+  return jwt.sign(payload, appConfig().JWT_SECRET, {
     expiresIn: +appConfig().REFRESH_TOKEN_TIME,
   });
 };
